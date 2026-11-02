@@ -49,7 +49,6 @@ const Title = () =>
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const directions = useMemo(() => find().toPath(), [location.pathname, isNotFound, pageTitle])
 
-
     const sm = useMediaQuery(theme.breakpoints.down('md'))
 
     const isOnlyOne = directions.length < 3 || isNotFound
@@ -106,7 +105,7 @@ const Title = () =>
         <Logo src='/favicon.svg' variant='square'/>
         <Breadcrumbs separator={ sm ? null : '>' } maxItems={ 3 }>
             {/* @ts-expect-error MUI 9 polymorphic component typing */}
-            <NoWrap component={ Link } to={ isOnlyOne ? null : getURL() } variant='h1' sx={{ maxWidth: '100%', fontSize: 30 }} color={ theme.palette.action.active }>
+            <NoWrap component={ isOnlyOne ? undefined : Link  } to={ getURL() } variant='h1' sx={{ maxWidth: '100%', fontSize: 30 }} color={ theme.palette.action.active }>
                 { isNotFound ? 'Lỗi 404' : directions[0] instanceof Path ? directions[0].name : 'Lỗi không xác định' }
             </NoWrap>
             { renderChips() }
