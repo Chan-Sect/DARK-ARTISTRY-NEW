@@ -8,7 +8,7 @@ import useStorage from "../storage";
 import {ViewKey} from "../../../config/view/Key.ts";
 import type {UserType} from "../storage/DataType.ts";
 import {ListHeader} from "./Header.tsx";
-import {lazy} from "react";
+import {lazy, Suspense} from "react";
 
 const Row = lazy(() => import('./Item').then(mod => ({ default : mod.Row })))
 // const Card = lazy(() => import('./Item.jsx').then(mod => ({ default : mod.Card })))
@@ -20,13 +20,10 @@ interface ContainerProps
 
 const Table = ({ children }: ContainerProps) =>
 {
-    const renderItem = () => children?.map((value, index) => value
-    ?
-        <Row key={ index }>{ value }</Row>
-        // <Suspense fallback={ <LoadingList/> } key={ index }>
-        //     <Row>{ value }</Row>
-        // </Suspense>
-    : <LoadingList key={ index }/>)
+    const renderItem = () => children?.map((value, index) => value ?
+    <Suspense fallback={ <LoadingList/> } key={ index }>
+        <Row>{ value }</Row>
+    </Suspense> : <LoadingList key={ index }/>)
 
     return <TableContainer sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
         <MuiTable stickyHeader>

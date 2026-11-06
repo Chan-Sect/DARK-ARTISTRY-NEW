@@ -91,9 +91,14 @@ const Provider = ({ children, path }: AccountProps) =>
 
     const getList = async (reset?: boolean) =>
     {
-        console.log('Chạy sau')
         const result = await API.silent.GET<UserType[]>(`users?${ getAPI(true, Boolean(reset)) }`)
-        if (result.error) showError(result.message)
+        // setList([])
+
+        if (result.error)
+        {
+            setList([])
+            showError(result.message)
+        }
         else setList(result)
     }
     const getMax = async () =>
