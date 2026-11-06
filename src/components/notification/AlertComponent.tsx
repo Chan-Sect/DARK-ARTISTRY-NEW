@@ -50,7 +50,7 @@ export interface AlertProps
 {
     type: NotificationType
     icon: ReactNode
-    path: string
+    path?: string
     content: string
 }
 interface AlertComponentProps extends AlertProps
@@ -64,12 +64,13 @@ export const AlertComponent = forwardRef<HTMLDivElement, AlertComponentProps>(({
 
     const close = () => closeSnackbar(id)
 
+    const renderText = () => <Text>{ content || '' }</Text>
+
     return <Container code={ type.code } ref={ ref } spacing={ 1 } direction="row">
         { type.icon || icon }
-        <Link to={ path } onClick={ close }>
-            <Text>{ content || '' }</Text>
-        </Link>
-
+        {
+            path === undefined ? renderText() : <Link to={ path } onClick={ close }>{ renderText() }</Link>
+        }
         <IconButton onClick={ close }><Close/></IconButton>
         {/*<audio autoPlay={ setting.sound.notification } src={ `/media/notification-${ type.code || 'info' }.mp3` }/>*/}
     </Container>

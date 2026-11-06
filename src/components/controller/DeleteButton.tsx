@@ -1,29 +1,27 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, Tooltip} from "@mui/material";
 import {Delete} from "@mui/icons-material";
-import Platform from "../../../config/platform/index.js";
 import {Fragment, useState, useEffect} from "react";
-import API from "../../../config/connection/main/API.js";
-import {useAlert} from "../../main/providers/unsigned/AlertProvider.jsx";
+import API from "../../config/connections/main/API.ts";
+import {useAlert} from "../../main/providers/main";
+import Platform from "../../config/platform";
 
-/**
- * @param {string} path - (required)
- * @param {[string], string} children
- * @param {function} onFinish
- * @returns {JSX.Element}
- */
-const DeleteButton = ({ path, onFinish, children }) =>
+interface DeleteButtonProps
 {
-    const [open, setOpen] = useState(false)
+    path: string
+    children: string[]
+    onFinish?: (success: string[]) => Promise<void>
+}
+
+const DeleteButton = ({ path, onFinish, children }: DeleteButtonProps) =>
+{
+    const [open, setOpen] = useState<boolean>(false)
     const [loading, setLoading] = useState(false)
     const { showError, showSuccess } = useAlert()
 
     const onClick = () =>
     {
-        if (Boolean(path))
-        {
-            setOpen(true)
-            setLoading(true)
-        }
+        setOpen(true)
+        setLoading(true)
     }
     const onCancel = () =>
     {
@@ -34,42 +32,25 @@ const DeleteButton = ({ path, onFinish, children }) =>
     {
         setOpen(false)
 
-        if (typeof children === 'string')
+        const success: string[] = []
+
+        for (const child of children)
         {
-            const url = `${ path }/${ children }`
+            const url = `${ path }/${ child }`
 
             const result = await API.DELETE(url)
 
             if (result.error) showError(result.message)
-            else showSuccess('Đã xoá 1 mục')
-            if (onFinish !== undefined) onFinish(children)
-
-            setLoading(false)
+            else success.push(child)
         }
-        else
-        {
-            const success = []
-
-            for (const child of children)
-            {
-                const url = `${ path }/${ child }`
-
-                const result = await API.DELETE(url)
-
-                if (result.error) showError(result.message)
-                else success.push(child)
-            }
-            setLoading(false)
-            if (success.length > 0) showSuccess(`Xoá thành công ${ success.length } mục`)
-            if (onFinish !== undefined) onFinish(success)
-        }
-
-
+        setLoading(false)
+        if (success.length > 0) showSuccess(`Xoá thành công ${ success.length } mục`)
+        if (onFinish !== undefined) await onFinish(success)
     }
 
     useEffect(() =>
     {
-        const handleKeyDown = event =>
+        const handleKeyDown = (event: KeyboardEvent) =>
         {
             if (open)
             {

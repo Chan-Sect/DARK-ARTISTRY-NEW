@@ -7,7 +7,7 @@ import {AlertContext} from "../main/context.ts";
 import type {ProviderProps} from "../main";
 import type {ReactNode} from "react";
 
-export type AlertShowType = (content: string, path: string, icon: ReactNode) => void
+export type AlertShowType = (content: string, path?: string, icon?: ReactNode) => void
 
 const AlertProvider = ({ children }: ProviderProps) =>
 {

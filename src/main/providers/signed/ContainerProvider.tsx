@@ -1,11 +1,11 @@
-import {type ReactNode, useState} from "react"
+import {Fragment, type ReactNode, useState} from "react"
 import {ContainerContext} from "../main/context.ts";
 import type {ProviderProps} from "../main";
 
 const ContainerProvider = ({ children }: ProviderProps) =>
 {
     const [menuControlOpen, setMenuControlOpen] = useState<boolean>(false)
-    const [controller, setController] = useState<ReactNode>(null)
+    const [controller, setController] = useState<ReactNode>(<Fragment/>)
     const [pageTitle, setPageTitle] = useState<string>('')
     const [hidden, setHidden] = useState<boolean>(false)
 

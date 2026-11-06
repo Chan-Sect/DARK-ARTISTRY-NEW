@@ -28,7 +28,7 @@ import DirectionArray from "./DirectionArray.ts";
 // const InboxComponent = lazy(() => import('../../components/route/Inbox/Main/Inbox.jsx'))
 // const InboxCreator = lazy(() => import('../../components/route/Inbox/Main/Creator.jsx'))
 //
-const AccountStudentComponent = lazy(() => import('../../routes/user'))
+const AccountStudentComponent = lazy(() => import('../../routes/user/main'))
 // const AccountAdminComponent = lazy(() => import('../../components/route/Account/Structure/Admin.jsx'))
 // const AccountEditor = lazy(() => import('../../components/route/Account/Structure/Editor.jsx'))
 //
@@ -117,7 +117,7 @@ class Direction
     public static get AccountStudent()
     {
         const path = Path.AccountStudent
-        const element = <AccountStudentComponent/>
+        const element = <AccountStudentComponent view='student'/>
 
         return new Direction({ path, element })
     }
