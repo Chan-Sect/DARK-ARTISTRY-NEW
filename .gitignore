@@ -25,4 +25,4 @@ dist-ssr
 /.firebaserc
 /firebase.json
 /.firebase/hosting.ZGlzdA.cache
-/src/config/connections/URI
+/src/config/connections/URI/server.ts
