@@ -9,7 +9,7 @@ interface DeleteButtonProps
 {
     path: string
     children: string[]
-    onFinish?: (success: string[]) => Promise<void>
+    onFinish: (success: string[]) => Promise<void> | void
 }
 
 const DeleteButton = ({ path, onFinish, children }: DeleteButtonProps) =>
@@ -45,7 +45,7 @@ const DeleteButton = ({ path, onFinish, children }: DeleteButtonProps) =>
         }
         setLoading(false)
         if (success.length > 0) showSuccess(`Xoá thành công ${ success.length } mục`)
-        if (onFinish !== undefined) await onFinish(success)
+        await onFinish(success)
     }
 
     useEffect(() =>

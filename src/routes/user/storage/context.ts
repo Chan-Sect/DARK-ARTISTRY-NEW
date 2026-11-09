@@ -2,6 +2,7 @@ import {type ChangeEvent, createContext, type Dispatch, type SetStateAction} fro
 import {type SortKey, ViewKey} from "../../../config/view/Key.ts";
 import type {FilterType, PropertyType, UserType} from "./DataType.ts";
 import ViewMode from "./ViewMode.ts";
+import type Path from "../../../config/directions/Path.ts";
 
 interface StorageType
 {
@@ -20,6 +21,8 @@ interface StorageType
 
     setOrder: Dispatch<SetStateAction<SortKey>>
     setBy: Dispatch<SetStateAction<PropertyType>>
+
+    path: Path
 
     onChangeView: (event: ChangeEvent<unknown>, newValue: ViewKey) => void
     onChangePage: (event: ChangeEvent<unknown>, value: number) => void

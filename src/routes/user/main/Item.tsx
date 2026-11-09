@@ -5,7 +5,6 @@ import type {UserType} from "../storage/DataType.ts";
 import TableCell from "@mui/material/TableCell";
 import {NoWrap} from "../../../config/style/Typography.tsx";
 import {formatDate} from "../../../config/text/format.ts";
-import Path from "../../../config/directions/Path.ts";
 import {Link} from "react-router-dom";
 import {Edit} from "@mui/icons-material";
 
@@ -17,7 +16,7 @@ interface ItemProps
 export const Row = ({ children }: ItemProps) =>
 {
     const theme = useTheme()
-    const { selected, onSelected } = useStorage()
+    const { selected, onSelected, path } = useStorage()
     // const { access } = useData()
     // const { currentUser } = useLoader()
 
@@ -83,7 +82,7 @@ export const Row = ({ children }: ItemProps) =>
         <TableCell onClick={ event => event.stopPropagation() } align="right" sx={{ cursor: 'default', position: 'sticky', right: 0, zIndex: 2, width: 0, background: theme.palette.background.default, borderLeft: `1px solid ${ theme.palette.divider }` }}>
             <Tooltip title={ canEdit ? 'Chỉnh sửa' : 'Bị hạn chế' } arrow disableInteractive>
             <span>
-                <IconButton color='warning' disabled={ !canEdit } component={ Link } to={ `${ Path.AccountStudent.url }/${ id }` }>
+                <IconButton color='warning' disabled={ !canEdit } component={ Link } to={ `${ path.url }/${ id }` }>
                     <Edit/>
                 </IconButton>
             </span>

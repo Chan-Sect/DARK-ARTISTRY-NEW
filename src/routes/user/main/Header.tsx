@@ -14,8 +14,7 @@ import MuiTableRow from "@mui/material/TableRow"
 import Path from "../../../config/directions/Path.ts";
 import useStorage from "../storage";
 import type {PropertyType} from "../storage/DataType.ts";
-// import {useProvider} from "./Provider.jsx";
-// import Path from "../../../../config/direction/Path.js";
+
 
 const TableRow = styled(MuiTableRow)(({ theme }) =>
 ({

@@ -9,13 +9,13 @@ const ContainerProvider = ({ children }: ProviderProps) =>
     const [pageTitle, setPageTitle] = useState<string>('')
     const [hidden, setHidden] = useState<boolean>(false)
 
-    const removeController = () => setController(null)
+    // const removeController = () => setController(null)
 
     const stateGetter = { menuControlOpen, controller, pageTitle, hidden }
     const stateSetter = { setMenuControlOpen, setController, setPageTitle, setHidden }
-    const functions = { removeController }
+    // const functions = { removeController }
 
-    return <ContainerContext.Provider value={{ ...stateGetter, ...stateSetter, ...functions }}>
+    return <ContainerContext.Provider value={{ ...stateGetter, ...stateSetter }}>
         { children }
     </ContainerContext.Provider>
 }

@@ -3,7 +3,6 @@ import type {AlertShowType} from "../unsigned/AlertProvider.tsx";
 import type {AccessType} from "../../../config/text/Access.ts";
 import Direction from "../../../config/directions/Direction.tsx";
 import DirectionArray from "../../../config/directions/DirectionArray.ts";
-import Path from "../../../config/directions/Path.ts";
 
 export interface SettingType
 {
@@ -51,7 +50,7 @@ interface ContainerType
     setPageTitle: Dispatch<SetStateAction<string>>
     setHidden: Dispatch<SetStateAction<boolean>>
 
-    removeController: () => void
+    // removeController: () => void
 }
 
 interface DataType
@@ -70,7 +69,7 @@ export interface GetLastInterface
 
 interface DirectionType
 {
-    visible: Direction[]
+    // visible: Direction[]
     special: boolean
     replaceable: boolean
     isNotFound: boolean
@@ -78,12 +77,15 @@ interface DirectionType
     find: (pathname?: string) => DirectionArray
     getRoot: (pathname?: string) => Direction | undefined
     getLast: (config?: GetLastInterface) => Direction | string | undefined
-    includes: (path: Path) => boolean
+    includes: (direction: Direction) => boolean
     all: (requireAccess: boolean) =>  Direction[]
 }
+
+
 
 export const AlertContext = createContext<AlertType | undefined>(undefined)
 export const LoaderContext = createContext<LoaderType | undefined>(undefined)
 export const ContainerContext = createContext<ContainerType | undefined>(undefined)
+export const ControllerContext = createContext<ContainerType | undefined>(undefined)
 export const DataContext = createContext<DataType | undefined>(undefined)
 export const DirectionContext = createContext<DirectionType | undefined>(undefined)

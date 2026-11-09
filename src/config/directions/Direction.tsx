@@ -29,6 +29,8 @@ import DirectionArray from "./DirectionArray.ts";
 // const InboxCreator = lazy(() => import('../../components/route/Inbox/Main/Creator.jsx'))
 //
 const AccountStudentComponent = lazy(() => import('../../routes/user/main'))
+const AccountStudentReader = lazy(() => import('../../routes/user/main/./Reader'))
+
 // const AccountAdminComponent = lazy(() => import('../../components/route/Account/Structure/Admin.jsx'))
 // const AccountEditor = lazy(() => import('../../components/route/Account/Structure/Editor.jsx'))
 //
@@ -88,12 +90,6 @@ class Direction
         this.pEditable = editable
     }
 
-
-    // private static specials: Path[] = []
-    // private static replaces: Path[] = []
-
-
-
     public static get DashBoard()
     {
         const path = Path.DashBoard
@@ -108,25 +104,25 @@ class Direction
     {
         const path = Path.Account
         const children = [Direction.AccountStudent, Direction.AccountTeacher, Direction.AccountParent, Direction.AccountEmployee, Direction.AccountRole]
-        // const element = <Fragment/>
-        // const insertable = undefined
-        // const editable = undefined
-
         return new Direction({ path, children })
     }
     public static get AccountStudent()
     {
         const path = Path.AccountStudent
         const element = <AccountStudentComponent view='student'/>
+        const insertable = <AccountStudentReader/>
+        const editable = <AccountStudentReader edit/>
 
-        return new Direction({ path, element })
+        return new Direction({ path, element, insertable, editable })
     }
     public static get AccountTeacher()
     {
         const path = Path.AccountTeacher
-        const element = <Fragment/>
+        const element = <AccountStudentComponent view='teacher'/>
+        const insertable = <AccountStudentReader/>
+        const editable = <AccountStudentReader edit/>
 
-        return new Direction({ path, element })
+        return new Direction({ path, element, insertable, editable })
     }
     public static get AccountParent()
     {
@@ -150,12 +146,30 @@ class Direction
         return new Direction({ path, element })
     }
 
-    private static VISIBLE: Direction[] = [Direction.DashBoard, Direction.Account]
-    private static FULL_ACCESS: Direction[] = [Direction.DashBoard, Direction.Account]
-    private static HIDDEN: Direction[] = []
+    public static get Achievement()
+    {
+        const path = Path.Achievement
+        const children = [Direction.AchievementMedal, Direction.AchievementTitle]
+        return new Direction({ path, children })
+    }
+    public static get AchievementMedal()
+    {
+        const path = Path.AchievementMedal
+        const element = <Fragment/>
+        return new Direction({ path, element })
+    }
+    public static get AchievementTitle()
+    {
+        const path = Path.AchievementTitle
+        const element = <Fragment/>
+        return new Direction({ path, element })
+    }
+
+    public static VISIBLE: Direction[] = [Direction.DashBoard, Direction.Account, Direction.Achievement]
+    public static FULL_ACCESS: Direction[] = [Direction.DashBoard, Direction.Account, Direction.Achievement]
+    public static HIDDEN: Direction[] = []
 
     private static ALL = (requireAccess = false) => [...(requireAccess ? Direction.VISIBLE : Direction.FULL_ACCESS), ...Direction.HIDDEN]
-
 
     public static find(pathname: string): DirectionArray
     {

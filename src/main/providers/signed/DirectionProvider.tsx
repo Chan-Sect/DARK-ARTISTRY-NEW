@@ -20,20 +20,20 @@ const DirectionProvider = ({ children }: ProviderProps) =>
     // const specials: Direction[] = [Path.Inbox]
     // const replaces: Direction[] = [Path.ProfileSecurity, Path.ProfileRole, Path.ProfilePost]
 
-    const visible: Direction[] = [Direction.DashBoard, Direction.Account]
-    const fullAccess: Direction[] = [Direction.DashBoard, Direction.Account]
-    const hidden: Direction[] = []
+    // const visible: Direction[] = [Direction.DashBoard, Direction.Account]
+    // const fullAccess: Direction[] = [Direction.DashBoard, Direction.Account]
+    // const hidden: Direction[] = []
 
 
     const specials: Path[] = []
     const replaces: Path[] = []
 
-    const all = (requireAccess = false) => requireAccess ? [...visible, ...hidden] : [...fullAccess, ...hidden]
+    const all = (requireAccess = false) => requireAccess ? [...Direction.VISIBLE, ...Direction.HIDDEN] : [...Direction.FULL_ACCESS, ...Direction.HIDDEN]
 
 
-    const find = (pathname = location.pathname): DirectionArray => isNotFound ? new DirectionArray() : Direction.find(pathname)
+    const find: (pathname?: string) => DirectionArray = (pathname = location.pathname) => isNotFound ? new DirectionArray() : Direction.find(pathname)
 
-    const getRoot = (pathname = location.pathname): (Direction | undefined) =>
+    const getRoot: (pathname?: string) => Direction | undefined = (pathname = location.pathname) =>
     {
         const paths = pathname.split('/').slice(1)
         const root = `/${ paths[0] }`
@@ -44,7 +44,7 @@ const DirectionProvider = ({ children }: ProviderProps) =>
         return isNotFound ? undefined : found
     }
 
-    const getLast = ({ keepString = false, asString = false }: GetLastInterface = {  }): Direction | string | undefined =>
+    const getLast: (config?: GetLastInterface) => Direction | string | undefined = ({ keepString = false, asString = false } = {  }) =>
     {
         const found = find()
         const removeString = (keepString || asString) ? found : found.filter(value => typeof value !== 'string')
@@ -60,16 +60,21 @@ const DirectionProvider = ({ children }: ProviderProps) =>
         else return last
     }
 
-    const includes = (path: Path) =>
+    const includes: (direction: Direction) => boolean = direction =>
     {
-        const found = find().toPath()
-        return !isNotFound && found.includes(path)
+        // const found = find().toPath()
+
+        const last = getLast()
+        const lastPath = last instanceof Direction ? last.path : undefined
+        return Boolean(!isNotFound && lastPath && (lastPath.url === direction.path.url || direction.children?.map(value => value.path.url).includes(lastPath.url)))
+
+        // return !isNotFound && found.map(data => data instanceof Path ? data.url : data).includes(path.url)
     }
 
     const special = Boolean(getRoot()?.path.url && specials.some(value => value.url === getRoot()?.path.url))
     const replaceable = replaces.map(path => path.url).includes(location.pathname)
 
-    const variable = { visible, special, replaceable }
+    const variable = { special, replaceable }
     const stateGetter = { isNotFound }
     const stateSetter = { setIsNotFound }
     const functions = { find, getRoot, getLast, includes, all }

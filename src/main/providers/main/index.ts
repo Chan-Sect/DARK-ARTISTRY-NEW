@@ -1,4 +1,4 @@
-import {type ReactNode, useContext} from "react";
+import {type DependencyList, type ReactNode, useContext, useEffect} from "react";
 import {AlertContext, ContainerContext, DataContext, DirectionContext, LoaderContext} from "./context.ts";
 
 export interface ProviderProps
@@ -46,3 +46,27 @@ export const useDirection = () =>
 
     return context
 }
+
+export const useController = (controller: () => ReactNode, deps: DependencyList) =>
+{
+    const context = useContext(ContainerContext)
+
+    if (!context)
+    {
+        throw new Error("useController() phải được gọi bên trong ControllerProvider")
+    }
+
+    const { setController } = context
+
+    useEffect(() =>
+    {
+        setController(controller())
+
+        return () =>
+        {
+            setController(null)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [...deps])
+}
+

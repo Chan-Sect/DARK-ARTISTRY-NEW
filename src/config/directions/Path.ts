@@ -1,14 +1,14 @@
 import {
-    DeveloperBoard,
+    DeveloperBoard, EmojiEvents,
     EscalatorWarning,
     LocalHospital,
-    LocalHospitalTwoTone, LocalLibrary,
+    LocalHospitalTwoTone, LocalLibrary, MilitaryTech,
     PeopleAlt,
     QuestionMark,
     School,
     Shield,
     SupervisedUserCircle,
-    type SvgIconComponent
+    type SvgIconComponent, WorkspacePremium
 } from '@mui/icons-material'
 
 interface PathConstructor
@@ -106,6 +106,30 @@ class Path
         const name = 'Vai trò'
         const url = `${ Path.Account.url }/role`
         const icon = { default: SupervisedUserCircle, add: LocalHospital }
+        const color = '#7D8291'
+        return new Path({ name, url, icon, color })
+    }
+    public static get Achievement()
+    {
+        const name = 'Thành tựu'
+        const url = `/achievement`
+        const icon = { default: EmojiEvents, add: LocalHospital }
+        const color = '#7D8291'
+        return new Path({ name, url, icon, color })
+    }
+    public static get AchievementMedal()
+    {
+        const name = 'Thành tích'
+        const url = `${ Path.Achievement.url }`
+        const icon = { default: WorkspacePremium, add: LocalHospital }
+        const color = '#7D8291'
+        return new Path({ name, url, icon, color })
+    }
+    public static get AchievementTitle()
+    {
+        const name = 'Danh hiệu'
+        const url = `${ Path.Achievement.url }/title`
+        const icon = { default: MilitaryTech, add: LocalHospital }
         const color = '#7D8291'
         return new Path({ name, url, icon, color })
     }

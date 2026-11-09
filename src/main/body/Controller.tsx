@@ -9,6 +9,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import {useContainer, useData, useDirection} from "../providers/main";
 import Direction from "../../config/directions/Direction.tsx";
 import AddButton from "../../components/controller/AddButton.tsx";
+import CloseButton from "../../components/controller/CloseButton.tsx";
 // import AddButton from "../../elements/controller/AddButton.jsx";
 // import CloseButton from "../../elements/controller/CloseButton.jsx";
 
@@ -71,27 +72,22 @@ const Controller = () =>
     const theme = useTheme()
     const { controller, hidden } = useContainer()
 
-    // const [root, setRoot] = useState<Direction | undefined>()
-    // const [last, setLast] = useState<Direction | undefined>()
     // const [tabValue, setTabValue] = useState(0)
 
     const md = useMediaQuery(theme.breakpoints.between('md', 'lg'))
     const lg = useMediaQuery(theme.breakpoints.up('lg'))
 
+
+
     const last = useMemo(() =>
     {
-        const value = getLast({ keepString: true })
+        const value = getLast()
         return value instanceof Direction ? value : undefined
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location.pathname, isNotFound, access])
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const root = useMemo(() => getRoot(), [location.pathname, isNotFound, access])
-    const tabValue = useMemo(() =>
-    {
-        if (last !== undefined) return root?.children?.map(direction => direction.path.url).indexOf(last.path.url) || 0
-        else return 0
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[location.pathname, isNotFound, access, root, last])
+    const tabValue = useMemo(() => root && last && root.children ? root.children.map(value => value.path.url).indexOf(last.path.url) : 0, [last, root])
 
     const renderTitleIcon = () =>
     {
@@ -136,6 +132,14 @@ const Controller = () =>
         return !(insertable || controller || closeable)
     }
 
+    // useEffect(() =>
+    // {
+    //     // eslint-disable-next-line react-hooks/set-state-in-effect
+    //     setTabValue(0)
+    // }, [location.pathname, isNotFound, access])
+
+
+
     return <Container direction='row'>
         <Title direction='row' spacing={ 1 } hidden={ root?.children?.length !== 1 }>
             { renderTitleIcon() }
@@ -145,7 +149,7 @@ const Controller = () =>
             { renderTabs() }
         </Tabs>
         <Holder direction='row-reverse' hidden={ hideController() }>
-            {/*<CloseButton/>*/}
+            <CloseButton/>
             <AddButton/>
             { controller }
         </Holder>

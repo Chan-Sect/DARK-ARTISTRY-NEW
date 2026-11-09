@@ -2,10 +2,7 @@ import {Collapse, Divider, ListItemButton, ListItemIcon, ListItemText, styled, u
 import {ExpandMore} from "@mui/icons-material";
 import MuiIconButton from "@mui/material/IconButton";
 import MuiListItem from "@mui/material/ListItem";
-
-// import {Link} from "react-router-dom";
-import {Fragment, useState} from "react";
-
+import {Fragment, useEffect, useState} from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {useContainer, useDirection} from "../providers/main";
 import Direction from "../../config/directions/Direction.tsx";
@@ -55,27 +52,35 @@ const Navigator = ({ children }: NavigatorProps) =>
     }
 
     const onClick = () => setMenuControlOpen(old => lg ? old : false)
-    const isExpanded = menuControlOpen && expanded
 
+    useEffect(() =>
+    {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        if (!menuControlOpen) setExpanded(includes(children))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [menuControlOpen])
 
     const renderExpandButton = () =>
-    <ExpandButton expand={ isExpanded } onClick={ () => setExpanded(old => !old) } color='primary' tabIndex={ -1 }>
+    <ExpandButton expand={ expanded } onClick={ () => setExpanded(old => !old) } color='primary' tabIndex={ -1 }>
         <ExpandMore/>
     </ExpandButton>
 
     const renderChildren = () => children.children?.map(value => <Navigator key={ value.path.name }>{ value }</Navigator>)
 
+
     return <Fragment>
         <Container secondaryAction={ (children.children && !onlyChild) && renderExpandButton() }>
             {/* @ts-expect-error MUI 9 polymorphic component typing */}
-            <ListItemButton selected={ includes(children.path) } onClick={ onClick } component={ Link } to={ getURL() }>
+            <ListItemButton selected={ includes(children) }
+                            onClick={ onClick }
+                            component={ Link } to={ getURL() }>
                 <ListItemIcon>
                     <Icon/>
                 </ListItemIcon>
                 <ListItemText primary={ name }/>
             </ListItemButton>
         </Container>
-        <Collapse in={ expanded } timeout="auto" unmountOnExit>
+        <Collapse in={ expanded && menuControlOpen } timeout="auto" unmountOnExit>
             <Divider/>
             { renderChildren () }
             <Divider/>

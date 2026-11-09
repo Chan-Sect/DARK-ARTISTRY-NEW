@@ -1,4 +1,4 @@
-import {type ProviderProps, useAlert, useContainer} from "../../../main/providers/main";
+import {type ProviderProps, useAlert, useController} from "../../../main/providers/main";
 import Context from "./context.ts";
 import {useLocation} from "react-router-dom";
 import {type ChangeEvent, Fragment, useEffect, useState} from "react";
@@ -19,7 +19,7 @@ interface AccountProps extends ProviderProps
 const Provider = ({ children, path }: AccountProps) =>
 {
     const location = useLocation()
-    const { setController, removeController } = useContainer()
+    // const { setController, removeController } = useContainer()
     // const { access } = useData()
     const { showError } = useAlert()
 
@@ -274,10 +274,7 @@ const Provider = ({ children, path }: AccountProps) =>
         setFilter(old => ({ ...old, search: param }))
     }
 
-    const controller = () =>
-    <Fragment>
-        { length > 0 && <DeleteButton onFinish={ onFinishDelete } path='role'>{ selected }</DeleteButton> }
-    </Fragment>
+
 
     useEffect(() =>
     {
@@ -327,18 +324,27 @@ const Provider = ({ children, path }: AccountProps) =>
         setPage(old => pages > 0 ? Math.max(0, Math.min(old, pages - 1)) : old)
     }, [pages])
 
+    // const controller = () =>
+    // <Fragment>
+    //     { length > 0 && <DeleteButton onFinish={ onFinishDelete } path='role'>{ selected }</DeleteButton> }
+    // </Fragment>
 
-    useEffect(() =>
-    {
-        setController(controller())
-        return () => removeController()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [selected, length])
+    // useEffect(() =>
+    // {
+    //     setController(controller())
+    //     return () => removeController()
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [selected, length])
+
+    useController(() =>
+    <Fragment>
+        { length > 0 && <DeleteButton onFinish={ onFinishDelete } path='role'>{ selected }</DeleteButton> }
+    </Fragment>, [selected, length])
 
     const stateGetter = { available, count, page, view, order, by, list, selected, length, filter, defaultFilter, max }
     const stateSetter = { setOrder, setBy }
     const functions = { onChangeView, onRequestSort, onChangePage, onSelected, onSelectAll, onChangeFilter, onResetFilter }
-    const constants = { }
+    const constants = { path }
 
     return <Context.Provider value={{ ...stateGetter, ...stateSetter, ...functions, ...constants }}>
         { children }
