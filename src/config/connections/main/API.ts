@@ -101,6 +101,7 @@ class API
                 case 'post':
                 {
                     const result = await axios.post(`${ URI.server }/${ this.url }`, formData)
+                    console.log(result)
                     return result.data
                 }
                 case 'put':
@@ -123,6 +124,7 @@ class API
         }
         catch(err)
         {
+            console.log(err)
             return handleError(err)
         }
     }
@@ -134,7 +136,7 @@ class API
 
         return this.setLoad()
     }
-    public POST = <T> (url: string, body: Record<string, unknown> | object | undefined): Promise<T & APIError> =>
+    public POST = <T> (url: string, body?: Record<string, unknown> | object): Promise<T & APIError> =>
     {
         this.method = 'post'
         this.url = url
@@ -142,7 +144,7 @@ class API
 
         return this.setLoad()
     }
-    public PATCH = <T> (url: string, body: Record<string, unknown> | object | undefined): Promise<T & APIError> =>
+    public PATCH = <T> (url: string, body?: Record<string, unknown> | object): Promise<T & APIError> =>
     {
         this.method = 'patch'
         this.url = url
@@ -150,7 +152,7 @@ class API
 
         return this.setLoad()
     }
-    public PUT = <T> (url: string, body: Record<string, unknown> | object | undefined): Promise<T & APIError> =>
+    public PUT = <T> (url: string, body?: Record<string, unknown> | object): Promise<T & APIError> =>
     {
         this.method = 'put'
         this.url = url
@@ -174,9 +176,9 @@ class API
     }
 
     public static GET = <T> (url: string) => new API().GET<T & APIError>(url)
-    public static POST = <T> (url: string, body: Record<string, unknown> | object | undefined) => new API().POST<T & APIError>(url, body)
-    public static PATCH = <T> (url: string, body: Record<string, unknown> | object | undefined) => new API().PATCH<T & APIError>(url, body)
-    public static PUT = <T> (url: string, body: Record<string, unknown> | object | undefined) => new API().PUT<T & APIError>(url, body)
+    public static POST = <T> (url: string, body?: Record<string, unknown> | object) => new API().POST<T & APIError>(url, body)
+    public static PATCH = <T> (url: string, body?: Record<string, unknown> | object) => new API().PATCH<T & APIError>(url, body)
+    public static PUT = <T> (url: string, body?: Record<string, unknown> | object) => new API().PUT<T & APIError>(url, body)
     public static DOWNLOAD = <T> (url: string) => new API().DOWNLOAD<T & APIError>(url)
     public static DELETE = <T> (url: string) => new API().DELETE<T & APIError>(url)
     public static silent = new API(true)

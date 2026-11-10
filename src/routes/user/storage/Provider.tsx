@@ -324,21 +324,9 @@ const Provider = ({ children, path }: AccountProps) =>
         setPage(old => pages > 0 ? Math.max(0, Math.min(old, pages - 1)) : old)
     }, [pages])
 
-    // const controller = () =>
-    // <Fragment>
-    //     { length > 0 && <DeleteButton onFinish={ onFinishDelete } path='role'>{ selected }</DeleteButton> }
-    // </Fragment>
-
-    // useEffect(() =>
-    // {
-    //     setController(controller())
-    //     return () => removeController()
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [selected, length])
-
     useController(() =>
     <Fragment>
-        { length > 0 && <DeleteButton onFinish={ onFinishDelete } path='role'>{ selected }</DeleteButton> }
+        { length > 0 && <DeleteButton onFinish={ onFinishDelete } path='users'>{ selected }</DeleteButton> }
     </Fragment>, [selected, length])
 
     const stateGetter = { available, count, page, view, order, by, list, selected, length, filter, defaultFilter, max }

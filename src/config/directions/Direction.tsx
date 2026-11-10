@@ -28,8 +28,8 @@ import DirectionArray from "./DirectionArray.ts";
 // const InboxComponent = lazy(() => import('../../components/route/Inbox/Main/Inbox.jsx'))
 // const InboxCreator = lazy(() => import('../../components/route/Inbox/Main/Creator.jsx'))
 //
-const AccountStudentComponent = lazy(() => import('../../routes/user/main'))
-const AccountStudentReader = lazy(() => import('../../routes/user/main/./Reader'))
+const AccountStudentComponent = lazy(() => import('../../routes/user/structure'))
+const AccountStudentReader = lazy(() => import('../../routes/user/structure/Reader'))
 
 // const AccountAdminComponent = lazy(() => import('../../components/route/Account/Structure/Admin.jsx'))
 // const AccountEditor = lazy(() => import('../../components/route/Account/Structure/Editor.jsx'))

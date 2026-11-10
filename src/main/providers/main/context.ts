@@ -86,6 +86,5 @@ interface DirectionType
 export const AlertContext = createContext<AlertType | undefined>(undefined)
 export const LoaderContext = createContext<LoaderType | undefined>(undefined)
 export const ContainerContext = createContext<ContainerType | undefined>(undefined)
-export const ControllerContext = createContext<ContainerType | undefined>(undefined)
 export const DataContext = createContext<DataType | undefined>(undefined)
 export const DirectionContext = createContext<DirectionType | undefined>(undefined)

@@ -1,13 +1,12 @@
 import LoadingElement from "../../../main/fragment/LoadingElement.tsx";
 import {Stack} from "@mui/material";
-import {Fragment, lazy, Suspense} from "react";
+import {lazy, Suspense} from "react";
 import Provider from "../storage/Provider";
 import Path from "../../../config/directions/Path";
-import Paging from "./Paging";
-// import Container from "./Container.tsx";
-import Filter from "./Filter";
+import Paging from "../main/Paging";
+import Filter from "../main/Filter";
 
-const Container = lazy(() => import('./Container'))
+const Container = lazy(() => import('../main/Container'))
 
 interface UserProps
 {
@@ -26,17 +25,16 @@ const Main = ({ view }: UserProps) =>
             case 'employee': return Path.AccountEmployee
         }
     }
-    return <Fragment>
-        <Provider path={ getAPI() }>
-            <Stack sx={{ overflow: 'hidden', height: '100%' }}>
-                <Filter/>
-                <Suspense fallback={ <LoadingElement/> }>
-                    <Container/>
-                </Suspense>
-                <Paging/>
-            </Stack>
-        </Provider>
-    </Fragment>
+
+    return <Provider path={ getAPI() }>
+        <Stack sx={{ overflow: 'hidden', height: '100%' }}>
+            <Filter/>
+            <Suspense fallback={ <LoadingElement/> }>
+                <Container/>
+            </Suspense>
+            <Paging/>
+        </Stack>
+    </Provider>
 }
 
 export default Main

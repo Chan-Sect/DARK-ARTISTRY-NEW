@@ -90,7 +90,7 @@ const HeaderEditor = ({ children, color, id, name, onChangeName, disableName }: 
                 <Information>
                     <Stack sx={{ flexGrow: 1, padding: theme.spacing(2, 1, 1) }} spacing={ 1 }>
                         <Stack spacing={ 1 } direction='row' sx={{ alignItems: 'center' }} >
-                            <TextField label='Tên người dùng' fullWidth disabled={ disableName } value={ name } onChange={ onChangeName }
+                            <TextField label='Tên người dùng' fullWidth disabled={ disableName } value={ name } onChange={ onChangeName } name='name'
                                        // slotProps={{ input: { endAdornment: <Activate value={ activate }/> }}}
                             />
                         </Stack>
