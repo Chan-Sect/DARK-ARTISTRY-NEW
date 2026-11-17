@@ -1,4 +1,4 @@
-import {Avatar, Checkbox, IconButton, Stack, Tooltip, useTheme} from "@mui/material"
+import {Checkbox, IconButton, Stack, Tooltip, useTheme} from "@mui/material"
 import useStorage from "../storage";
 import MuiTableRow from "@mui/material/TableRow";
 import type {UserType} from "../storage/DataType.ts";
@@ -7,6 +7,7 @@ import {NoWrap} from "../../../config/style/Typography.tsx";
 import {formatDate} from "../../../config/text/format.ts";
 import {Link} from "react-router-dom";
 import {Edit} from "@mui/icons-material";
+import Avatar from "../../../components/structure/Avatar.tsx";
 
 interface ItemProps
 {
@@ -20,7 +21,7 @@ export const Row = ({ children }: ItemProps) =>
     // const { access } = useData()
     // const { currentUser } = useLoader()
 
-    const { id, name, mail, updateTime, createTime } = children
+    const { id, name, mail, image, updateTime, createTime } = children
 
     const isSelected = selected.includes(id)
 
@@ -38,9 +39,10 @@ export const Row = ({ children }: ItemProps) =>
         </TableCell>
         <TableCell align="center" sx={{ width: 0 }}>
             <Stack sx={{ alignItems: 'center' }}>
+                <Avatar src={ image }/>
                 {/*<IconButton sx={{ padding: 0 }} onClick={ event => event.stopPropagation() } >*/}
-                    {/*<Avatar src={ picture ? `${ URI.server }/${ picture }` : undefined }/>*/}
-                    <Avatar/>
+                {/*    <Avatar src={ image ? `${ URI.server }/file/${ image }` : undefined }/>*/}
+                    {/*<Avatar/>*/}
                 {/*</IconButton>*/}
             </Stack>
         </TableCell>

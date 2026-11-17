@@ -9,13 +9,14 @@ import API from "../../../config/connections/main/API.ts";
 import RestoreButton from "../../../components/controller/RestoreButton.tsx";
 import {isEqual} from "../../../config/text/sort.ts";
 import Path from "../../../config/directions/Path.ts";
+import type {AccuracyType} from "../../../components/picker/AvatarPicker.tsx";
 
 interface UserData
 {
     name: string
     mail: string
     phone: string
-    image: File | string | null
+    image: string | null
 }
 
 const defaultData: UserData =
@@ -48,13 +49,15 @@ const Reader = ({ edit }: EditorProps) =>
 
     const [defaultValue, setDefaultValue] = useState<UserData>(defaultData)
     const [value, setValue] = useState<UserData>(defaultValue)
+    const [image, setImage] = useState<AccuracyType | undefined>()
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => setValue(old => ({ ...old, [event.target.name] : event.target.value }))
+    const onChangeImage = (value: AccuracyType) => setImage(value)
     const onRestore = () => setValue(defaultValue)
 
     const onCreate = async () =>
     {
-        const result = await API.POST<UserData>('users', value)
+        const result = await API.POST<UserData>('users', { ...value, file: image?.file })
 
         if (result.error) showError(result.message)
         else
@@ -66,7 +69,7 @@ const Reader = ({ edit }: EditorProps) =>
 
     const onEdit = async () =>
     {
-        const result = await API.PATCH<UserData>(`users/${ id }`, value)
+        const result = await API.PATCH<UserData>(`users/${ id }`, { ...value, file: image?.file })
 
         if (result.error) showError(result.message)
         else
@@ -76,7 +79,7 @@ const Reader = ({ edit }: EditorProps) =>
         }
     }
 
-    const isNotChange = isEqual(value, defaultValue)
+    const isNotChange = isEqual(value, defaultValue) && !image?.file
     const nameDoesNotMatchRequireLength = value.name.length < 8 || value.name.length > 100
 
     const isInvalid = isNotChange || nameDoesNotMatchRequireLength
@@ -91,7 +94,7 @@ const Reader = ({ edit }: EditorProps) =>
         <Fragment>
             <SaveButton onSave={ onCreate } disabled={ isInvalid }/>
         </Fragment>
-    }, [edit, value])
+    }, [edit, value, image])
 
     useEffect(() =>
     {
@@ -103,7 +106,7 @@ const Reader = ({ edit }: EditorProps) =>
     }, [edit, id])
 
     const color = edit ? "warning" : "success"
-    return <HeaderEditor id={ id } color={ color } name={ value.name ?? '' } onChangeName={ onChange } >
+    return <HeaderEditor id={ id } color={ color } name={ value.name ?? '' } image={ value.image ?? undefined } onChangeName={ onChange } onChangePicture={ onChangeImage }>
         <Stack sx={{ padding: theme.spacing(0, 2, 1) }} spacing={ 1 }>
             <Stack spacing={ 1 } direction={{ xs: 'column' , sm: 'column', md: 'row' }}>
                 <Card sx={{ flexGrow: 1 }}>

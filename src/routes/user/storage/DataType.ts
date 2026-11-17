@@ -15,6 +15,7 @@ export interface UserType
     id: string
     name: string
     mail: string
+    image: string
     createTime: number
     updateTime: number
 }

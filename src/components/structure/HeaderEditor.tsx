@@ -1,6 +1,6 @@
 import type {ProviderProps} from "../../main/providers/main";
 import {Box, Stack, styled, TextField, Tooltip, useTheme} from "@mui/material"
-import AvatarPicker from "../picker/AvatarPicker.tsx";
+import AvatarPicker, {type AccuracyType} from "../picker/AvatarPicker.tsx";
 import Path from "../../config/directions/Path.ts";
 import {NoWrap} from "../../config/style/Typography.tsx";
 import type {ChangeEvent} from "react";
@@ -69,20 +69,22 @@ interface EditorProps extends ProviderProps, ColorProps
 {
     id?: string
     name?: string
+    image?: string
     onChangeName?: (event: ChangeEvent<HTMLInputElement>) => void
+    onChangePicture?: (value: AccuracyType) => void
     disableName?: boolean
 }
 
-const HeaderEditor = ({ children, color, id, name, onChangeName, disableName }: EditorProps) =>
+const HeaderEditor = ({ children, color, id, name, image, onChangeName, onChangePicture, disableName }: EditorProps) =>
 {
     const theme = useTheme()
     return <Box sx={{ position: 'relative' }}>
-        <Colored color={ color } />
+        <Colored color={ color }/>
         <Box sx={{ margin: theme.spacing(1, 0, ) }}>
             <Stack sx={{ width: '100%', position: 'relative', alignItems: 'center' }} direction={{ xs: 'column', sm: 'row' }}>
                 <AvatarContainer>
                     <Tooltip title='Chọn ảnh' arrow disableInteractive>
-                        <AvatarPicker variant='circular' editor>
+                        <AvatarPicker variant='circular' editor value={ image } onChange={ onChangePicture }>
                             <Path.AccountStudent.Icon/>
                         </AvatarPicker>
                     </Tooltip>

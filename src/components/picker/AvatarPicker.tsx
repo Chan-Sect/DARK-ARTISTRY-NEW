@@ -1,5 +1,6 @@
 import {
-    alpha, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Stack, styled,
+    alpha, Box, Button,
+    CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Skeleton, Stack, styled,
     type Theme, Tooltip, useTheme
 } from "@mui/material";
 import {Close, Flip, Person, Rotate90DegreesCcw, Rotate90DegreesCw} from "@mui/icons-material"
@@ -70,13 +71,13 @@ interface CardProps
 }
 interface AvatarPickerProps extends CardProps
 {
-    value?: string | File
+    value?: string
     onChange?: (value: AccuracyType) => void
     disabled?: boolean
     editor?: boolean
 }
 
-interface AccuracyType
+export interface AccuracyType
 {
     link?: string
     detail?: Cropper.Data
@@ -179,15 +180,33 @@ const AvatarPicker = ({ value, onChange, disabled, variant = 'circular', childre
     }
     const onConfirm = () =>
     {
+        const cropper = cropperRef.current?.cropper
+        const canvas = cropper?.getCroppedCanvas()
+        if (!canvas || !file)
+        {
+            showError('Không thể cắt ảnh, anh bé thử chọn lại ảnh nha')
+            return
+        }
+
+        canvas.toBlob(blob =>
+        {
+            if (!blob)
+            {
+                showError('Không thể xử lý ảnh đã cắt')
+                return
+            }
+
+            const croppedFile = new File([blob], file.name, { type: blob.type || file.type, lastModified: Date.now() })
         setAccuracy(old =>
         {
             if (old?.link && old?.link !== link) URL.revokeObjectURL(old.link)
             return { link, detail }
         })
 
-        if (onChange) onChange({ file, detail, link })
+            if (onChange) onChange({ file: croppedFile, detail, link })
 
-        setOpen(false)
+            setOpen(false)
+        }, file.type || 'image/jpeg')
     }
     const rotate = (angle: number) =>
     {
@@ -230,9 +249,7 @@ const AvatarPicker = ({ value, onChange, disabled, variant = 'circular', childre
 
     useEffect(() =>
     {
-        const isFile = value instanceof File
-
-        if (!isFile)
+        if (value !== undefined)
         {
             // eslint-disable-next-line react-hooks/set-state-in-effect
             if (!String(value).startsWith('blob')) setLink(old =>
@@ -275,9 +292,13 @@ const AvatarPicker = ({ value, onChange, disabled, variant = 'circular', childre
         return () => window.removeEventListener('resize', handleResize)
     }, [accuracy])
 
-    const renderSelector = () => <MuiCardActionArea disabled={ disabled } component="label" sx={{  width: '100%', height: '100%', padding: 0, color: theme.palette.action.active }}>
+    const renderSelector = () => <MuiCardActionArea disabled={ disabled } component="label" sx={{ position: 'relative', width: '100%', height: '100%', padding: 0, color: theme.palette.action.active }}>
         <VisuallyHiddenInput type='file' onChange={ onImageSelected } accept=".png, .jpg, .jpeg" />
-        <Avatar variant='square' src={ typeof value === 'string' ? value.startsWith('blob') ? value : `${ URI.server }/${ value }` : undefined }>
+        <Skeleton variant='circular' animation='wave' sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,  width: '100%', height: '100%' }} />
+        <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <CircularProgress/>
+        </Box>
+        <Avatar variant='square' src={ typeof value === 'string' ? value.startsWith('blob') ? value : `${ URI.server }/file/${ value }` : undefined }>
             { children || <Person/> }
         </Avatar>
     </MuiCardActionArea>
