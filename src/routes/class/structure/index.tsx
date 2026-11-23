@@ -1,12 +1,12 @@
 import LoadingElement from "../../../main/fragment/LoadingElement.tsx";
 import {Stack} from "@mui/material";
 import {lazy, Suspense} from "react";
-import Provider from "../storage/Provider";
+import Provider from "../../user/storage/Provider";
 import Path from "../../../config/directions/Path";
-import Paging from "../main/Paging";
-import Filter from "../main/Filter";
+import Paging from "../../user/main/Paging";
+import Filter from "../../user/main/Filter";
 
-const Container = lazy(() => import('../main/Container'))
+const Container = lazy(() => import('../../user/main/Container'))
 
 interface UserProps
 {

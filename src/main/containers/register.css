@@ -1,0 +1,60 @@
+.register-shell { min-height: 100svh; display: flex; align-items: stretch; justify-content: center; padding: 28px; background: #f2f1f6; color: #242037; font-family: 'DM Sans',sans-serif; }
+.register-panel { flex: 1 1 60%; min-width: 0; max-width: 780px; min-height: min(800px,calc(100svh - 56px)); display: flex; align-items: center; justify-content: center; border-radius: 0 24px 24px 0; background: #fff; }
+.register-content { width: min(100%,470px); padding: 48px clamp(28px,5vw,66px); }
+.register-heading h1 { margin: 12px 0 7px; color: #242037; font: 700 clamp(24px,2.3vw,30px)/1.28 Manrope,sans-serif; letter-spacing: -.04em; }
+.register-heading p { margin: 0; color: #858195; font-size: 13px; line-height: 1.65; }
+.register-form { display: grid; gap: 17px; margin-top: 28px; }
+.register-field label { display: block; margin-bottom: 7px; color: #38344a; font-size: 12px; font-weight: 600; }
+.register-field input { width: 100%; height: 46px; padding: 0 13px; border: 1px solid #e3ddef; border-radius: 8px; outline: none; background: #fff; color: #29253a; font: inherit; font-size: 12px; transition: border-color .18s,box-shadow .18s; }
+.register-field input::placeholder { color: #b3afbd; }
+.register-field input:focus { border-color: #8759cb; box-shadow: 0 0 0 3px rgba(135,89,203,.12); }
+.register-field input[aria-invalid='true'] { border-color: #d76575; }
+.register-input-with-action { position: relative; }
+.register-input-with-action input { padding-right: 55px; }
+.register-input-with-action button { position: absolute; top: 50%; right: 12px; padding: 5px 0 5px 8px; transform: translateY(-50%); border: 0; background: transparent; color: #7954af; cursor: pointer; font: inherit; font-size: 11px; font-weight: 600; }
+.register-error { display: block; margin-top: 5px; color: #bd4055; font-size: 11px; }
+.register-terms { display: flex; align-items: flex-start; gap: 9px; color: #716d7e; cursor: pointer; font-size: 11px; line-height: 1.55; }
+.register-terms > input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.register-check { width: 15px; height: 15px; flex: 0 0 15px; display: grid; place-items: center; margin-top: 1px; border: 1px solid #d4cce0; border-radius: 4px; background: white; }
+.register-terms > input:checked + .register-check { border-color: #754bb2; background: #754bb2; }
+.register-terms > input:checked + .register-check:after { content: '✓'; color: white; font-size: 11px; }
+.register-terms > input:focus-visible + .register-check { outline: 3px solid rgba(135,89,203,.2); }
+.register-terms button { padding: 0; border: 0; background: none; color: #754bb2; cursor: pointer; font: inherit; font-weight: 600; }
+.register-terms button:hover { text-decoration: underline; }
+.register-submit { width: 100%; min-height: 46px; border: 0; border-radius: 8px; background: linear-gradient(105deg,#6840a4,#8157bb 62%,#9871cd); box-shadow: 0 7px 16px rgba(107,69,165,.2); color: white; cursor: pointer; font: 600 13px Manrope,sans-serif; transition: transform .18s,box-shadow .18s,background .18s; }
+.register-submit:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 10px 21px rgba(107,69,165,.26); }
+.register-submit:disabled { background: #d7d5dc; box-shadow: none; color: #898692; cursor: not-allowed; }
+.register-backend-note { margin: -6px 0 0; color: #7954af; font-size: 11px; line-height: 1.5; }
+.register-login { margin: 22px 0 0; color: #858195; text-align: center; font-size: 11px; }
+.register-login a { margin-left: 3px; color: #754bb2; font-weight: 600; text-decoration: none; }
+.register-login a:hover { text-decoration: underline; }
+.policy-backdrop { position: fixed; z-index: 10; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(24,16,38,.42); }
+.policy-dialog { position: relative; width: min(100%,400px); padding: 28px; border: 1px solid #eee9f4; border-radius: 16px; background: white; box-shadow: 0 20px 60px rgba(28,15,48,.2); }
+.policy-dialog h2 { margin: 0 35px 12px 0; color: #29243a; font: 700 18px Manrope,sans-serif; }
+.policy-dialog p { margin: 0; color: #817b8f; font-size: 13px; line-height: 1.6; }
+.policy-close { position: absolute; top: 15px; right: 16px; width: 30px; height: 30px; border: 0; border-radius: 50%; background: #f5f1fa; color: #645873; cursor: pointer; font-size: 20px; }
+.register-field .register-text-field .MuiOutlinedInput-root { height: 46px; border-radius: 8px; color: #29253a; font-family: 'DM Sans',sans-serif; font-size: 12px; }
+.register-field .register-text-field .MuiOutlinedInput-notchedOutline { border-color: #e3ddef; }
+.register-field .register-text-field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline { border-color: #c9b6e3; }
+.register-field .register-text-field .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline { border-width: 1px; border-color: #8759cb; box-shadow: 0 0 0 3px rgba(135,89,203,.12); }
+.register-field .register-text-field .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline { border-color: #d76575; }
+.register-field .register-text-field .MuiOutlinedInput-input { height: auto; padding: 0 13px; }
+.register-field .register-text-field .MuiOutlinedInput-input::placeholder { color: #b3afbd; opacity: 1; }
+.register-field .register-text-field .MuiInputAdornment-root { margin-right: 8px; }
+.register-field .register-text-field .MuiIconButton-root { padding: 4px; color: #7954af; }
+.register-form .register-terms { margin: 0; align-items: flex-start; color: #716d7e; font-size: 11px; line-height: 1.55; }
+.register-terms .MuiCheckbox-root { margin: -3px 5px 0 -9px; padding: 4px; color: #d4cce0; }
+.register-terms .MuiCheckbox-root.Mui-checked { color: #754bb2; }
+.register-terms .MuiSvgIcon-root { font-size: 17px; }
+.register-terms .policy-link { min-width: 0; margin: 0; padding: 0; color: #754bb2; font: inherit; text-transform: none; vertical-align: baseline; }
+.register-terms .policy-link:hover { background: transparent; text-decoration: underline; }
+.register-submit { text-transform: none; font-family: Manrope,sans-serif; }
+.register-login { font-family: 'DM Sans',sans-serif; }
+.policy-dialog { padding-top: 15px; }
+.policy-dialog .MuiDialogTitle-root { margin: 0 35px 0 0; padding: 13px 28px 12px; color: #29243a; font: 700 18px Manrope,sans-serif; }
+.policy-dialog .MuiDialogContent-root { padding: 0 28px 28px; color: #817b8f; font: 13px/1.6 'DM Sans',sans-serif; }
+.policy-dialog .MuiDialogContent-root p { margin: 0; }
+.policy-close.MuiIconButton-root { z-index: 1; color: #645873; }
+@media (max-width: 900px) { .register-shell { padding: 18px; }.register-panel { min-height: calc(100svh - 36px); flex-basis: 61%; }.register-content { padding: 38px clamp(25px,4vw,48px); } }
+@media (max-width: 640px) { .register-shell { min-height: 100svh; padding: 0; background: white; }.register-shell > .brand-panel { display: none; }.register-panel { min-height: 100svh; width: 100%; max-width: none; border-radius: 0; }.register-content { width: min(100%,480px); padding: 38px 25px 30px; }.register-heading h1 { font-size: 25px; } }
+@media (prefers-reduced-motion: reduce) { .register-shell *, .register-shell *:before, .register-shell *:after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
