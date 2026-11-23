@@ -3,12 +3,13 @@ import {Box, Button, Stack, Table as MuiTable, TableBody, TableContainer, Typogr
 // import {lazy, Suspense} from "react";
 import {List as LoadingList} from "./Loading";
 
-import LoadingElement from "../../../main/fragment/LoadingElement";
+// import LoadingElement from "../../../main/fragment/LoadingElement";
 import useStorage from "../storage";
 import {ViewKey} from "../../../config/view/Key.ts";
 import type {UserType} from "../storage/DataType.ts";
 import {ListHeader} from "./Header.tsx";
 import {lazy, Suspense} from "react";
+import ServerLoading from "../../../main/fragment/ServerLoading.tsx";
 
 const Row = lazy(() => import('./Item').then(mod => ({ default : mod.Row })))
 // const Card = lazy(() => import('./Item.jsx').then(mod => ({ default : mod.Card })))
@@ -59,7 +60,7 @@ const Container = () =>
         // <Grid>{ list }</Grid>
 
     return (max < 0 || count < 0) ?
-    <LoadingElement/>
+    <ServerLoading/>
     : (count === 0 && max !== 0) ?
     <Stack sx={{ alignItems: 'center', justifyContent: 'center', flexGrow: 1 }} spacing={ 1 }>
         <Typography>Không tìm thấy dữ liệu</Typography>

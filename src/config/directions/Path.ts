@@ -134,6 +134,15 @@ class Path
         return new Path({ name, url, icon, color })
     }
 
+    public static get Classes()
+    {
+        const name = 'Lớp học'
+        const url = `.classes`
+        const icon = { default: MilitaryTech, add: LocalHospital }
+        const color = '#7D8291'
+        return new Path({ name, url, icon, color })
+    }
+
 
     // static get Test()
     // {

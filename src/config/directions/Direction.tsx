@@ -31,6 +31,9 @@ import DirectionArray from "./DirectionArray.ts";
 const AccountStudentComponent = lazy(() => import('../../routes/user/structure'))
 const AccountStudentReader = lazy(() => import('../../routes/user/structure/Reader'))
 
+
+const ClassesComponent = lazy(() => import('../../routes/class/structure'))
+
 // const AccountAdminComponent = lazy(() => import('../../components/route/Account/Structure/Admin.jsx'))
 // const AccountEditor = lazy(() => import('../../components/route/Account/Structure/Editor.jsx'))
 //
@@ -165,8 +168,15 @@ class Direction
         return new Direction({ path, element })
     }
 
-    public static VISIBLE: Direction[] = [Direction.DashBoard, Direction.Account, Direction.Achievement]
-    public static FULL_ACCESS: Direction[] = [Direction.DashBoard, Direction.Account, Direction.Achievement]
+    public static get Classes()
+    {
+        const path = Path.Classes
+        const element = <ClassesComponent view='teacher'/>
+        return new Direction({ path, element })
+    }
+
+    public static VISIBLE: Direction[] = [Direction.DashBoard, Direction.Account, Direction.Achievement, Direction.Classes]
+    public static FULL_ACCESS: Direction[] = [Direction.DashBoard, Direction.Account, Direction.Achievement, Direction.Classes]
     public static HIDDEN: Direction[] = []
 
     private static ALL = (requireAccess = false) => [...(requireAccess ? Direction.VISIBLE : Direction.FULL_ACCESS), ...Direction.HIDDEN]

@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import {styled} from "@mui/material";
 import MuiBackdrop from "@mui/material/Backdrop";
 import MuiLinearProgress from "@mui/material/LinearProgress";
