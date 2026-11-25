@@ -32,7 +32,8 @@ const AccountStudentComponent = lazy(() => import('../../routes/user/structure')
 const AccountStudentReader = lazy(() => import('../../routes/user/structure/Reader'))
 
 
-const ClassesComponent = lazy(() => import('../../routes/class/structure'))
+const ClassesLayout = lazy(() => import('../../routes/class/structure/ClassesLayout'))
+const ClassesDemo = lazy(() => import('../../routes/class/structure/ClassesDemo'))
 
 // const AccountAdminComponent = lazy(() => import('../../components/route/Account/Structure/Admin.jsx'))
 // const AccountEditor = lazy(() => import('../../components/route/Account/Structure/Editor.jsx'))
@@ -171,8 +172,23 @@ class Direction
     public static get Classes()
     {
         const path = Path.Classes
-        const element = <ClassesComponent view='teacher'/>
-        return new Direction({ path, element })
+        const children = [Direction.ClassSubjects, Direction.ClassSessions, Direction.ClassGroups]
+        return new Direction({ path, children, element: <ClassesLayout/> })
+    }
+    public static get ClassSubjects()
+    {
+        const path = Path.ClassSubjects
+        return new Direction({ path, element: <ClassesDemo section='subjects'/> })
+    }
+    public static get ClassSessions()
+    {
+        const path = Path.ClassSessions
+        return new Direction({ path, element: <ClassesDemo section='sessions'/> })
+    }
+    public static get ClassGroups()
+    {
+        const path = Path.ClassGroups
+        return new Direction({ path, element: <ClassesDemo section='groups'/> })
     }
 
     public static VISIBLE: Direction[] = [Direction.DashBoard, Direction.Account, Direction.Achievement, Direction.Classes]

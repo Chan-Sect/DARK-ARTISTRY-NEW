@@ -14,7 +14,7 @@ const GlobalTheme = () =>
 
         '& *' :
         {
-            fontFamily : 'Montserrat',
+            fontFamily : 'Roboto, "Segoe UI", Arial, sans-serif',
             userSelect: 'text',
             outline: 'none !important',
         },

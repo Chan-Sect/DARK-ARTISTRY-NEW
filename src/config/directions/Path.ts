@@ -137,11 +137,15 @@ class Path
     public static get Classes()
     {
         const name = 'Lớp học'
-        const url = `.classes`
-        const icon = { default: MilitaryTech, add: LocalHospital }
+        const url = '/classes'
+        const icon = { default: School, add: LocalHospital }
         const color = '#7D8291'
         return new Path({ name, url, icon, color })
     }
+
+    public static get ClassSubjects() { return new Path({ name: 'Môn học', url: `${Path.Classes.url}/subjects`, icon: { default: LocalLibrary, add: LocalHospital }, color: '#8B78B8' }) }
+    public static get ClassSessions() { return new Path({ name: 'Buổi học', url: `${Path.Classes.url}/sessions`, icon: { default: MilitaryTech, add: LocalHospital }, color: '#8B78B8' }) }
+    public static get ClassGroups() { return new Path({ name: 'Lớp học', url: `${Path.Classes.url}/groups`, icon: { default: PeopleAlt, add: LocalHospital }, color: '#8B78B8' }) }
 
 
     // static get Test()

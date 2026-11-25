@@ -137,7 +137,7 @@ const base = (mode: PaletteMode = 'dark') => createTheme({
     },
     typography:
     {
-        fontFamily: 'Montserrat',
+        fontFamily: 'Roboto, "Segoe UI", Arial, sans-serif',
 
         h1:
         {
